@@ -17,6 +17,7 @@ var messages = document.getElementById("messages");
   });
 
   socket.on("received", data => {
+    console.log('dato recivido',data.message);
     let li = document.createElement("li");
     let span = document.createElement("span");
     var messages = document.getElementById("messages");

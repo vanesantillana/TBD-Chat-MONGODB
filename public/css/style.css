@@ -9,10 +9,9 @@ body {
 
 .chat_window {
   position: absolute;
-  width: calc(100% - 20px);
+  width: 100%;
   max-width: 800px;
-  height: 500px;
-  border-radius: 10px;
+  height: 100%;
   background-color: #fff;
   left: 50%;
   top: 50%;
@@ -23,7 +22,7 @@ body {
 }
 
 .top_menu {
-  background-color: #fff;
+  background-color: #128c7e;
   width: 100%;
   padding: 20px 0 15px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
@@ -51,7 +50,7 @@ body {
 }
 .top_menu .title {
   text-align: center;
-  color: #bcbdc0;
+  color: white;
   font-size: 20px;
 }
 
@@ -60,7 +59,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 347px;
+  height: 77%;
   overflow: scroll;
 }
 .messages .message {
@@ -199,10 +198,11 @@ body {
 
 .messages > li {
   font-size: 15px;
-  color: rgb(13, 223, 153);
-  background: #f7a30675;
+  color: rgb(27, 27, 27);
+  background: #ffffff;
   border-radius: 5px;
   width: fit-content;
+  padding: 0 8px;
 }
 
 .messages > span {

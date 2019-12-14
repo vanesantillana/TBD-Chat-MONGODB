@@ -33,7 +33,7 @@ const connect = require("./dbconnect");
 
 
 function emit_message(tsocket,message){
-  //console.log("message: " + message);
+  console.log("message: " + message);
   //broadcast message to everyone in port:5000 except yourself.
   tsocket.emit("received", { message: message });
   tsocket.broadcast.emit("received", { message: message });

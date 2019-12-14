@@ -1,37 +1,56 @@
 <!doctype html>
 <html>
   <head>
-    <title>Anonymouse Real-time chat</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<!------ Include the above in your HEAD tag ---------->
+    <title>CHAT - MONGODB</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    <!------ Include the above in your HEAD tag ---------->
     <link href="/css/style.css" type="text/css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   </head>
   <body>
     <div class="chat_window">
-    <div class="top_menu">
-        <div class="buttons">
-            <div class="button close"></div>
-            <div class="button minimize"></div>
-            <div class="button maximize"></div>
-        </div>
-        <div class="title">Chat</div>
-    </div>
-    <ul id ="messages" class="messages">
-        
-    </ul>
+      <div class="top_menu">
+          <div class="buttons">
+              <div class="button close"></div>
+              <div class="button minimize"></div>
+              <div class="button maximize"></div>
+          </div>
+          <div class="title">Chat - MongoDB</div>
+      </div>
+      <ul id ="messages" class="messages">
+          
+      </ul>
      
-    <div class="bottom_wrapper clearfix">
-   <i id="typing"></i>
-    <form id="form">
-        <div class="message_input_wrapper">
-            <input id="message" class="message_input" placeholder="Type your message here..." />
-        </div>
-        <button class="send_message">
-           Send
-        </button>
-      </form>
+      <div class="bottom_wrapper clearfix">
+        <i id="typing"></i>
+        <form >
+          <div class="row">
+            <div class="col-9">
+              <input type="text" class="form-control" id="message" placeholder="Mensaje..." >
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-success btn-block">Enviar</button>
+            </div>
+          </div>
+        </form>
+        <!--
+        <form id="form">
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <input id="message" class="form-control"  placeholder="Mensaje..." />
+              </div>
+              <div class="col-md-2">
+                <button class="send_message" >Enviar</button>
+              </div>
+            </div>
+        </form>-->
+      </div>
     </div>
-</div>
 
     <script src="/js/socket.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
