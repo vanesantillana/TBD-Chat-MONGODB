@@ -1,4 +1,3 @@
-//require the express module
 const express = require("express");
 const app = express();
 const dateTime = require("simple-datetime-formater");
@@ -7,10 +6,9 @@ const chatRouter = require("./route/chatroute");
 const loginRouter = require("./route/loginRoute");
 var faker = require('faker');
 
-//require the http module
 const http = require("http").Server(app);
 
-// require the socket.io module
+// INICIALIZA SOCKETS
 const io = require("socket.io");
 
 const port = 5000;
@@ -20,7 +18,7 @@ app.use(bodyParser.json());
 
 //routes
 app.use("/chats", chatRouter);
-app.use("/login", loginRouter);
+//app.use("/login", loginRouter);
 
 //set the express.static middleware
 app.use(express.static(__dirname + "/public"));
@@ -28,20 +26,21 @@ app.use(express.static(__dirname + "/public"));
 //integrating socketio
 socket = io(http);
 
-//database connection
+// CONEXION A LA DB
 const Chat = require("./models/Chat");
 const connect = require("./dbconnect");
 
 
+////////////////////////////////////
+
 function emit_message(tsocket,message){
   console.log("message: " + message);
-  //broadcast message to everyone in port:5000 except yourself.
-  tsocket.emit("received", { message: message });
-  tsocket.broadcast.emit("received", { message: message });
+
+  tsocket.emit("received", { message: message }); // PARA MI
+  tsocket.broadcast.emit("received", { message: message }); //PARA LOS DEMAS
   connect.then(db => {
     console.log("Conexion correcta con express");
     let chatMessage = new Chat({ message: message, sender: "Anomimo" }); //Anonymous
-
     chatMessage.save();
   });
 }
@@ -52,7 +51,8 @@ function infinity_messages(tsocket){
     emit_message(tsocket,tmessage);
   }
 }
-//setup event listener
+
+//inicializo socket
 socket.on("connection", socket => {
   console.log("user connected");
 
@@ -60,7 +60,7 @@ socket.on("connection", socket => {
     console.log("user disconnected");
   });
 
-  //Someone is typing
+  //Alguien esta escribiendo
   socket.on("typing", data => {
     socket.broadcast.emit("notifyTyping", {
       user: data.user,
@@ -68,12 +68,12 @@ socket.on("connection", socket => {
     });
   });
 
-  //when soemone stops typing
+  //Cuando alguien para de escribir
   socket.on("stopTyping", () => {
     socket.broadcast.emit("notifyStopTyping");
   });
 
-  socket.on("chat message", function(msg) {
+  socket.on("chatmessage", function(msg) {
     emit_message(socket,msg);
     if(msg=="infinity"){
       infinity_messages(socket);

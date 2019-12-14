@@ -4,20 +4,17 @@ var messages = document.getElementById("messages");
 (function() {
   $("form").submit(function(e) {
     let li = document.createElement("li");
-    e.preventDefault(); // prevents page reloading
-    socket.emit("chat message", $("#message").val());
-
-    //messages.appendChild(li).append($("#message").val());
-    //let span = document.createElement("span");
-    //messages.appendChild(span).append("by " + "Anonymous" + ": " + "just now");
-
+    e.preventDefault(); 
+    // Emito mi mensaje a mi mismo
+    socket.emit("chatmessage", $("#message").val());
     $("#message").val("");
-   
     return false;
   });
 
+  //RECIBO MENSAJES DE TODOS LOS USUARIOS
   socket.on("received", data => {
-    console.log('dato recivido',data.message);
+    console.log('dato recibido',data.message);
+
     let li = document.createElement("li");
     let span = document.createElement("span");
     var messages = document.getElementById("messages");
@@ -27,7 +24,7 @@ var messages = document.getElementById("messages");
   });
 })();
 
-// fetching initial chat messages from the database
+// IINICIA CHAT CON RECUPERACION DE DATOS
 (function() {
   fetch("/chats")
     .then(data => {
@@ -46,12 +43,12 @@ var messages = document.getElementById("messages");
     });
 })();
 
-//is typing...
+
 
 let messageInput = document.getElementById("message");
 let typing = document.getElementById("typing");
 
-//isTyping event
+//ESCRIBIENDO
 messageInput.addEventListener("keypress", () => {
   socket.emit("typing", { user: "Alguien", message: "esta escribiendo..." });
 });
@@ -61,7 +58,7 @@ socket.on("notifyTyping", data => {
   console.log(data.user + data.message);
 });
 
-//stop typing
+//PARA DE ESCRIBIR
 messageInput.addEventListener("keyup", () => {
   socket.emit("stopTyping", "");
 });

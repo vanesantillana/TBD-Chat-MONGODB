@@ -10,7 +10,7 @@ router.route("/").get((req, res, next) => {
   res.statusCode = 200;
 
   connectdb.then(db => {
-    let data = Chats.find({ message: "Anonymous" });
+    let data = Chats.find({ message: "Anonimo" });
     Chats.find({}).then(chat => {
       res.json(chat);
     });
