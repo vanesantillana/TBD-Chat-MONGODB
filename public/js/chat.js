@@ -22,9 +22,8 @@ var messages = document.getElementById("messages");
     let span = document.createElement("span");
     var messages = document.getElementById("messages");
     messages.appendChild(li).append(data.message);
-    messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
+    messages.appendChild(span).append("Enviado por " + "anonimo" + ": " + "justo ahora");
     $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 5);
-    console.log("Hello bingo!");
   });
 })();
 
@@ -41,7 +40,7 @@ var messages = document.getElementById("messages");
         messages.appendChild(li).append(data.message);
         messages
           .appendChild(span)
-          .append("by " + data.sender + ": " + formatTimeAgo(data.createdAt));
+          .append("Enviado por " + data.sender + ": " + formatTimeAgo(data.createdAt)); //
       });
       $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
     });
@@ -54,7 +53,7 @@ let typing = document.getElementById("typing");
 
 //isTyping event
 messageInput.addEventListener("keypress", () => {
-  socket.emit("typing", { user: "Someone", message: "is typing..." });
+  socket.emit("typing", { user: "Alguien", message: "esta escribiendo..." });
 });
 
 socket.on("notifyTyping", data => {

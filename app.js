@@ -5,6 +5,7 @@ const dateTime = require("simple-datetime-formater");
 const bodyParser = require("body-parser");
 const chatRouter = require("./route/chatroute");
 const loginRouter = require("./route/loginRoute");
+var faker = require('faker');
 
 //require the http module
 const http = require("http").Server(app);
@@ -38,8 +39,8 @@ function emit_message(tsocket,message){
   tsocket.emit("received", { message: message });
   tsocket.broadcast.emit("received", { message: message });
   connect.then(db => {
-    console.log("connected correctly to the server");
-    let chatMessage = new Chat({ message: message, sender: "Anonymous" });
+    console.log("Conexion correcta con express");
+    let chatMessage = new Chat({ message: message, sender: "Anomimo" }); //Anonymous
 
     chatMessage.save();
   });
@@ -47,7 +48,8 @@ function emit_message(tsocket,message){
 
 function infinity_messages(tsocket){
   for(let i=0; i<100; i++){
-    emit_message(tsocket,'hola, como');
+    var tmessage = faker.lorem.sentence();
+    emit_message(tsocket,tmessage);
   }
 }
 //setup event listener
