@@ -7,12 +7,12 @@ var messages = document.getElementById("messages");
     e.preventDefault(); // prevents page reloading
     socket.emit("chat message", $("#message").val());
 
-    messages.appendChild(li).append($("#message").val());
-    let span = document.createElement("span");
-    messages.appendChild(span).append("by " + "Anonymous" + ": " + "just now");
+    //messages.appendChild(li).append($("#message").val());
+    //let span = document.createElement("span");
+    //messages.appendChild(span).append("by " + "Anonymous" + ": " + "just now");
 
     $("#message").val("");
-
+   
     return false;
   });
 
@@ -22,6 +22,7 @@ var messages = document.getElementById("messages");
     var messages = document.getElementById("messages");
     messages.appendChild(li).append(data.message);
     messages.appendChild(span).append("by " + "anonymous" + ": " + "just now");
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 5);
     console.log("Hello bingo!");
   });
 })();
@@ -41,6 +42,7 @@ var messages = document.getElementById("messages");
           .appendChild(span)
           .append("by " + data.sender + ": " + formatTimeAgo(data.createdAt));
       });
+      $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
     });
 })();
 

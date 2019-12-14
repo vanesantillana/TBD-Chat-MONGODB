@@ -31,6 +31,25 @@ socket = io(http);
 const Chat = require("./models/Chat");
 const connect = require("./dbconnect");
 
+
+function emit_message(tsocket,message){
+  //console.log("message: " + message);
+  //broadcast message to everyone in port:5000 except yourself.
+  tsocket.emit("received", { message: message });
+  tsocket.broadcast.emit("received", { message: message });
+  connect.then(db => {
+    console.log("connected correctly to the server");
+    let chatMessage = new Chat({ message: message, sender: "Anonymous" });
+
+    chatMessage.save();
+  });
+}
+
+function infinity_messages(tsocket){
+  for(let i=0; i<100; i++){
+    emit_message(tsocket,'hola, como');
+  }
+}
 //setup event listener
 socket.on("connection", socket => {
   console.log("user connected");
@@ -53,21 +72,14 @@ socket.on("connection", socket => {
   });
 
   socket.on("chat message", function(msg) {
-    console.log("message: " + msg);
-
-    //broadcast message to everyone in port:5000 except yourself.
-    socket.broadcast.emit("received", { message: msg });
-
-    //save chat to the database
-    connect.then(db => {
-      console.log("connected correctly to the server");
-      let chatMessage = new Chat({ message: msg, sender: "Anonymous" });
-
-      chatMessage.save();
-    });
+    emit_message(socket,msg);
+    if(msg=="infinity"){
+      infinity_messages(socket);
+    }
   });
 });
 
 http.listen(port, () => {
   console.log("Running on Port: " + port);
 });
+
